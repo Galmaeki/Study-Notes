@@ -49,3 +49,19 @@
   - 장애가 발생할것으로 예상되는 경우 빠르게 실패처리하여 비효율적인 대기시간을 줄여 시스템 자원을 보호
 - Fallback
   - 요청 실패시 기본 응답이나 대체 로직을 수행할 수 있는 폴백 기능을 제공
+
+#### Spring Cloud MSA 간 통신
+- 기존 Spring Cloud 에서 MSA간 통신 방법으론 아래 두가지가 존재
+1. RestTemplate
+```java
+RestTemplate restTemplate = new RestTemplate();
+restTemplate.getForObject("http://localhost:8080/",User.class,200);
+```
+2. Feign Client
+```java
+@FeignClient("stores")
+public interface StoreClient {
+    @RequestMapping(method = RequestMethod.GET, value = "/stores")
+    List<Store> getStores();
+}
+```
