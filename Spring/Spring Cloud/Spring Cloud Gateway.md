@@ -279,3 +279,16 @@ spring:
             - Path=/first-service/**
 ```
 - lb : 로드밸런싱을 의미함
+
+### Routes 정보 수정
+```yaml
+- id: user-service
+  uri: lb://USER-SERVICE
+  predicates:
+    - Path=/user-service/login
+    - Method = POST
+  filters:
+    - RemoveRequestHeader=Cookie
+    - RewritePath=/user-service/(?<segment>.*), /$\{segment} 
+```
+- Path 의 /user-service/login 경로로 Method 의 POST 요청이 들어올 때,/user-service 의 경로 정보를 변경하여 보냄 
