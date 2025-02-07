@@ -56,6 +56,8 @@ git rev-parse --show-toplevel
 spring:
   application:
     name: { 어플리케이션이름 } # 어플리케이션 이름 = Github 레포지토리에서 관리하는 파일 애플리케이션 이름
+    profiles:
+    active: { 사용할 프로필 }
   config:
     import: optional:configserver:{config서버 경로}
 ```
@@ -65,9 +67,13 @@ spring:
 spring:
   application:
     name: { 어플리케이션이름 }
+  profiles:
+    active: { 사용할 프로필 }
   config:
     import: optional:configserver:{config서버 경로}
   cloud:
     config:
       name: { 읽어와야 하는 yml 이름 }, { 읽어와야 하는 yml 이름 }
 ```
+- optional: Config Server에 설정정보가 존재하지 않아도 로컬에 존재하는 설정으로 어플리케이션을 실행함
+- configserver: 위 설정 없는경우 연결에 실패하면 프로그램 종료
