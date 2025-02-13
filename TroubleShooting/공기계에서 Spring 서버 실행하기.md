@@ -1,4 +1,8 @@
 ## 공기계에서 스프링 실행하기
+- 공부용으로 aws 서버에서 발생하는 비용이 부담을 느껴 이를 대체할 방법을 생각하다가 공기계 발견
+- 안드로이드에 jre를 설치할 방법을 생각하다 리눅스를 설치 할 수 있다는 포스트를 확인
+
+## 진행
 <img src="../img/TS-01-01.PNG">
 
 - 모바일 환경에서 리눅스 환경을 이용할 수 있게 해주는 어플리케이션 설치
@@ -21,11 +25,18 @@ sudo apt install openssh-server
 sudo apt install vim
 ```
 
+- vim 으로 ssh 설정파일 진입
+```shell
+sudo vi /etc/ssh/sshd_config
+```
+
 <img src="../img/TS-01-03.PNG">
+<br>
+<img src="../img/TS-01-12.PNG">
 
 - OpenSSH 의 설정을 변경
   - Vim에서 편집모드는 'i' 를 눌러 진입 가능
-- Port 22 와 ListenAddress 0.0.0.0 , PasswordAuthentication 부분을 주석 해제
+- Port 22 와 PasswordAuthentication 부분을 주석 해제
   - Port 22 
     - ssh를 연결할 포트를 설정함
     - 루팅되지 않은 공기계는 0 ~ 1023 포트를 사용 할 수 없어 2022 포트를 사용함
@@ -52,7 +63,7 @@ ifconfig
 ```shell
 curl ifconfig.me
 ```
-<img src="../img/TS-01-05.png">
+<img src="../img/TS-01-05.PNG">
 
 - 주의 - ipconfig 가 아닌 ifconfig 임
   - IP Address 설정이 아닌 Interface 설정이기 때문  
@@ -68,6 +79,7 @@ curl ifconfig.me
 ```shell
 ssh -p {위에서 지정한 포트} userland@{ifconfig 이미지의 회색 공인 ip}
 ```
+- 로그인 시 필요한 비밀번호는 userland 앱에서 Filesysyem -> apps 긴 터치 -> edit -> Password 의 눈 아이콘 클릭으로 확인 가능
 
 - spring 실행을 위해 버전에 맞는 java 설치
 ```shell
@@ -102,8 +114,3 @@ java -version
 - 외부에서 접속하기 위해선 공유기의 포트포워딩을 한번 더 해줘야함
 
 <img src="../img/TS-01-11.PNG">
-
-
-
-
-
