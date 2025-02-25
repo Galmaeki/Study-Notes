@@ -69,3 +69,42 @@ public class UserService {
     }
 }
 ```
+
+### 예외 처리
+1. try-catch 사용
+```java
+    String get() {
+        String result = null;
+        try {
+            result = client.get();
+        } catch (FeignException e) {
+            //예외 처리
+        }
+        return result;
+    }
+```
+2. Custom ErrorDecoder 사용
+  -  ErrorDecoder 를 상속받아 Custom ErrorDecoder 클래스를 작성
+```java
+public class FeignErrorDecoder implements ErrorDecoder {
+   @Override
+   public Exception decode(String s, Response response) {
+      switch (response.status()) {
+         case 400:
+            return new ResponseStatusException(HttpStatusCode.valueOf(response.status())
+                    , "400 에러 발생");
+         case 404:
+            return new ResponseStatusException(HttpStatusCode.valueOf(response.status())
+                 , "404 에러 발생");
+      }
+      return null;
+   }
+}
+```
+  - Bean 등록
+```java
+    @Bean
+    public FeignErrorDecoder feignErrorDecoderFactory(){
+        return new FeignErrorDecoder();
+    }
+```
