@@ -1,4 +1,4 @@
-## JVM
+# JVM
 - Java Virtual Machine(자바 가상 머신)
 - 자바 어플리케이션을 클래스 로더를 통해 읽어들여 자바 API와 함께 실행하는것
 - Java와 OS 사이 중개자 역할을 수행하여 OS 독립 작동을 가능케함
@@ -55,3 +55,38 @@
 #### Garbage Collection(가비지 컬렉션)
 - JVM 이 자동으로 메모리를 관리하는 메커니즘
 - 더 이상 사용되지 않는 객체를 찾아 제거하여 메모리 누수를 방지
+
+### Java 코드 실행 과정
+1. 소스코드(.java) 작성
+2. 컴파일(javac) -> 바이트코드(.class)생성
+3. 클래스 로더가 .class 파일을 jvm에 로드
+4. Excution Engine 이 바이트코드를 해석하여 실행
+5. 필요한 경우 GC가 메모리 정리
+
+## 클래스 로딩
+- JVM이 프로그램을 실행 할 때 클래스 파일을 로드하는 과정
+- JVM은 프로그램 실행 도중 필요한 클래스를 동적으로 로드(Dynamic Loading)하여 사용
+
+### 클래스 로딩 과정
+1. Loading : 클래스 파일을 읽어 JVM 메모리에 로드
+  - 실제 메모리에 클래스의 메타데이터, 메소드 데이터, 실행 스택 등이 생성됨
+2. Link : 로드된 클래스 파일간 참조를 연결하는 과정
+  - 참조가 분석되어 필요한 기타 클래스들도 이 시점에 로드 됨
+3. Initialization : 클래스 변수의 초기값이 할당되며, static 블록 실행
+
+### 클래스 로더의 종류
+- 3가지 기본 클래스 로더를 제공
+- Bootstrap ClassLoader : rt.jar 같은 Java 표준 라이브러리 로드
+- Extension ClassLoader : lib/ext/ 폴더에 있는 확장 라이브러리를 로드
+- Application ClassLoader : 클래스 패스에 있는 애플리케이션 클래스를 로드
+
+### 동적 로딩
+- 프로그램 실행 중(runtime)에 필요한 클래스를 메모리에 로드
+- 실행중 새로운 클래스를 메모리에 추가 가능
+- Reflection API 활용 가능
+
+#### 런타임 동적 로딩
+- 클래스 이름에 맞는 클래스를 메모리에 로드
+- Class.forName("클래스이름") 또는 ClassLoader.loadClass("클래스이름")
+- Reflection API를 이용하여 생성자 호출(newInstance()), 메서드 실행(invoke()) 가능.
+- Spring 에서도 ApplicationContext.getBean 이나 AOP 같은 방식 등 다양하게 사용됨
